@@ -1,0 +1,47 @@
+<?php
+    require('common.php');
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
+    $sql = $pdo->query('SELECT * FROM products');
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?= translate('Index') ?></title>
+    <style>
+        td {
+            width: 150px;
+            border: 1px solid #000;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <?php while ($row = $sql->fetch()) : ?>
+            <?php if (!array_key_exists($row['id'], $_SESSION['cart'])) : ?>
+                <tr>
+                    <td>
+                        <h3><?= $row['image'] ? $row['image'] : translate('No image') ?></h3>
+                    </td>
+                    <td>
+                        <h3><?= $row['title'] ? $row['title'] : translate('No title') ?></h3>
+                        <h3><?= $row['description'] ? row['title'] : translate('No description') ?></h3>
+                        <h3><?= $row['price'] ? row['title'] : translate('No price') ?></h3>
+                    </td>
+                    <td>
+                        <a href="index.php?action=add&id=<?= $row['id'] ?>"><?= translate('Add') ?></a>
+                    </td>
+                </tr>
+            <?php endif ?>
+        <?php endwhile ?>
+    </table>
+    <br>
+    <a href="cart.php"><?= translate('Go to cart') ?></a>
+</body>
+</html>
+
+
+
+
